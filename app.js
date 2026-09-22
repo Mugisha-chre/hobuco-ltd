@@ -1305,6 +1305,23 @@ app.get('/help', (req, res) => {
 
 
 
+// Health check — reports server status plus a live database check, so it's
+// useful for uptime monitors (e.g. https://hobuco-ltd.onrender.com/health).
+app.get('/health', (req, res) => {
+  const startedAt = Date.now();
+  db.query('SELECT 1 AS ok', (err) => {
+    const dbOk = !err;
+    const payload = {
+      status: dbOk ? 'ok' : 'degraded',
+      uptimeSeconds: Math.floor(process.uptime()),
+      timestamp: new Date().toISOString(),
+      database: dbOk ? 'connected' : 'unavailable',
+      responseTimeMs: Date.now() - startedAt
+    };
+    res.status(dbOk ? 200 : 503).json(payload);
+  });
+});
+
 // Start server
 app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
 
