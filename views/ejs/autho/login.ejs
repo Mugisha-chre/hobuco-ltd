@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Access Your Account</title>
+
+
+    <!-- favicon -->
+     <link rel="icon" type="image/png" href="../../favicon/favicon-96x96.png" sizes="96x96" />
+     <link rel="icon" type="image/svg+xml" href="../../favicon/favicon.svg" />
+     <link rel="shortcut icon" href="../../favicon/favicon.ico" />
+     <link rel="apple-touch-icon" sizes="180x180" href="../../favicon/apple-touch-icon.png" />
+     <meta name="apple-mobile-web-app-title" content="HOBUCO " />
+     <link rel="manifest" href="../../favicon/site.webmanifest" />
+
+
+
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+
+  <link rel="stylesheet" href="../../css/autho/login.css">
+</head>
+<body>
+  
+<div id=preloader>
+<div class=loader-content>
+<p class=loader-text>HOBUCO platform...</p>
+<div class=loader-dots>
+<div class=dot></div>
+<div class=dot></div>
+<div class=dot></div>
+<div class=dot></div>
+</div>
+</div>
+</div>
+    
+    <div class="wrapper">
+        <div class="main-con">
+      <div class="title-text">
+        <div class="title login">Login Form</div>
+        <div class="title signup">Signup Form</div>
+      </div>
+      <div class="form-container">
+        <div class="slide-controls">
+          <input type="radio" name="slide" id="login" checked>
+          <input type="radio" name="slide" id="signup">
+          <label for="login" class="slide login">Login</label>
+          <label for="signup" class="slide signup">Create Account</label>
+          <div class="slider-tab"></div>
+        </div>
+        <div class="form-inner">
+
+
+
+          
+<form class="login">
+  <div class="field">
+    <input type="text" name="username" placeholder="Username">
+  </div>
+  <div class="field password-field">
+    <input type="password" name="password" placeholder="Password" id="password">
+    <i class="fa-regular fa-eye" id="togglePassword"></i>
+  </div>
+  <div class="pass-link">
+    <input type="checkbox" name="remember" id="remember">
+    <span class="remember-text">Remember me.</span>
+  </div>
+  
+  <!-- Error message container -->
+  <div id="errorMessage" class="error-message" style="display: none;"></div>
+  
+  <div class="field btn">
+    <div class="btn-layer"></div>
+    <input type="submit" value="Login">
+  </div>
+  <div class="forgot-password">
+    <a href="/forgot">Forgot Password?</a>
+  </div>
+</form>
+
+
+
+
+          <form class="signup" id="signupForm">
+            <div class="field">
+              <input type="text" name="username" placeholder="Username">
+            </div>
+            <div class="field">
+              <input type="email" name="email" placeholder="Email Address">
+            </div>
+            <div class="field">
+              <input type="password" name="password" placeholder="Password">
+            </div>
+
+
+            <!-- role field -->
+
+            <!-- <div class="field">
+              <select name="role">
+                <option value="">Select Role</option>
+                <option value="manager">Manager</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div> -->
+
+
+            <!-- error msg -->
+            <div id="signupErrorMessage" class="error-message" style="display: none;"></div>
+
+
+            <!-- success msg -->
+            <div id="signupSuccessMessage" class="success-message" style="display: none;"></div>
+
+            
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" value="Signup">
+            </div>
+          </form>
+
+
+
+        </div>
+        <div class="back-btn">
+            <button class="back btn-primary" onclick="goBack()">Back</button>
+        </div>
+      </div>
+      </div>
+    </div>
+
+</body>
+
+
+<!-- script file -->
+   <script src="../../../js/autho/login.js"></script>
+
+    
+
+</html>

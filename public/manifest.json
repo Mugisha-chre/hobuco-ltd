@@ -1,0 +1,23 @@
+{
+  "name": "HOBUCO Ltd",
+  "short_name": "HOBUCO",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#005f28",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "description": "HOBUCO Ltd is a multidisciplinary consulting firm in Rwanda providing expert services in development, strategy, and environmental solutions.",
+  "icons": [
+    {
+      "src": "/favicon/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

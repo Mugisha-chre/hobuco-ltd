@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Help - HOBUCO Consultation Services</title>
+  <link rel="stylesheet" href="../../../css/dashboard/help.css" />
+
+  <!-- favicon -->
+     <link rel="icon" type="image/png" href="../../favicon/favicon-96x96.png" sizes="96x96" />
+     <link rel="icon" type="image/svg+xml" href="../../favicon/favicon.svg" />
+     <link rel="shortcut icon" href="../../favicon/favicon.ico" />
+     <link rel="apple-touch-icon" sizes="180x180" href="../../favicon/apple-touch-icon.png" />
+     <meta name="apple-mobile-web-app-title" content="HOBUCO " />
+     <link rel="manifest" href="../../favicon/site.webmanifest" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css" rel="stylesheet">
+  <link href="https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fa-solid fa-book"></i> Help Guide - HOBUCO Services System</h1>
+
+    <section>
+      <h2><i class="fa-solid fa-lock-keyhole"></i> 1. Sign Up and Login</h2>
+      <ul>
+        <li>Visit <strong>/signup</strong> to register your account.</li>
+        <li>Use your credentials to login via <strong>/login</strong>.</li>
+        <li>Roles: <code>Admin</code>, <code>Client</code>, <code>Manager</code> (assigned on registration).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><i class="fa-solid fa-calendars"></i> 2. Booking a Consultation</h2>
+      <ul>
+        <li>Go to your Dashboard after login.</li>
+        <li>Click <strong>"Consultations"</strong> or navigate to <strong>/consultations/Add New</strong>.</li>
+        <li>Fill in your topic, preferred date/time, and submit.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><i class="fa-solid fa-eye"></i> 3. Viewing Consultations</h2>
+      <ul>
+        <li>Dashboard shows a table of your consultations.</li>
+        <li>Admins/Managers see all consultations with filtering options.</li>
+        <li>Click "View" to see consultation details.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><i class="fa-solid fa-pencil"></i> 4. Editing or Rescheduling</h2>
+      <ul>
+        <li>Click on "Edit" to update consultation info.</li>
+        <li>Date/time, topic and description can be changed before approval.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><i class="fa-solid fa-trash-can"></i> 5. Cancel/Delete Consultations</h2>
+      <ul>
+        <li>Click on "Delete" next to the consultation to cancel it.</li>
+        <li>This action is irreversible once approved or completed.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><i class="fa-solid fa-chart-simple"></i> 6. Admin Dashboard</h2>
+      <ul>
+        <li>Admins can access metrics of all users (Clients, Managers).</li>
+        <li>Manage user roles and oversee system activities.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><i class="fa-solid fa-lightbulb"></i> 7. Tips</h2>
+      <ul>
+        <li>Use <code>Ctrl + F</code> to search keywords on this page.</li>
+        <li>All actions are logged for accountability.</li>
+        <li>Contact support if your consultation gets stuck in “Pending”.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><i class="fa-solid fa-envelope"></i> 8. Contact & Support</h2>
+      <ul>
+        <li>Email: <a href="mailto:hobucoltd2050@gmail.com">hobucoltd2050@gmail.com</a></li>
+        <li>Live chat available in the bottom right corner (during business hours).</li>
+      </ul>
+       
+<button class="back btn-primary" onclick="goBack()">Back</button>
+
+        
+    </section>
+
+    <p style="text-align: center; margin-top: 3rem;">&copy; <%= new Date().getFullYear() %> HOBUCO Consultation Services System</p>
+  </div>
+ <script src="../../../js/dashboard/help.js"></script>
+</body>
+</html>

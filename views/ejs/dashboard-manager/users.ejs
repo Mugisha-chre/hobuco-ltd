@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= role.charAt(0).toUpperCase() + role.slice(1) %> | Dashboard - Manage Users Operations</title>
+
+
+    <!-- favicon -->
+     <link rel="icon" type="image/png" href="../../favicon/favicon-96x96.png" sizes="96x96" />
+     <link rel="icon" type="image/svg+xml" href="../../favicon/favicon.svg" />
+     <link rel="shortcut icon" href="../../favicon/favicon.ico" />
+     <link rel="apple-touch-icon" sizes="180x180" href="../../favicon/apple-touch-icon.png" />
+     <meta name="apple-mobile-web-app-title" content="HOBUCO " />
+     <link rel="manifest" href="../../favicon/site.webmanifest" />
+
+
+
+
+
+
+
+
+
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../../css/dashboard-admin/users.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src="../../../favicon/favicon-96x96.png" alt="">
+                <span>HOBUCO</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <a href="/dashboard" class="menu-link">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="/requests" class="menu-link">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Requests</span>
+                </a>
+            </li>
+            <li class="menu-item active">
+                <a href="/admin/users" class="menu-link">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="/consultations" class="menu-link">
+                    <i class="fas fa-handshake"></i>
+                    <span>Consultations</span>
+                </a>
+            </li> 
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Users</h1>
+            </div>
+            
+            <div class="top-bar-right">
+                <!-- Search Bar -->
+<div class="search-container">
+  <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+  <i class="fas fa-search search-icon"></i>
+</div>
+               
+                
+                <!-- User Profile -->
+                <div class="profile-container">
+                    <button class="profile-btn" id="profileBtn">
+                        <div class="profile-circle profile-avatar"><%= username.charAt(0).toUpperCase() %></div> 
+                        <span class="profile-name"><%= username.charAt(0).toUpperCase() + username.slice(1) %></span>
+                        <i class="fas fa-chevron-down profile-arrow"></i>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-info">
+                            <div class="profile-circle profile-avatar profile-avatar-large"><%= username.charAt(0).toUpperCase() %></div> 
+                            <div class="profile-details">
+                                <h4><%= username.charAt(0).toUpperCase() + username.slice(1) %></h4>
+                                <p><%= role.charAt(0).toUpperCase() + role.slice(1) %></p>
+                            </div>
+                        </div>
+                        <div class="profile-menu">
+                            <a href="/help" class="profile-menu-item">
+                                <i class="fas fa-question-circle"></i>
+                                <span>Help</span>
+                            </a>
+                            <hr class="profile-divider">
+                            <a href="/logout" class="profile-menu-item logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Dashboard Widgets -->
+            <section class="widgets-section">
+                <div class="widget-grid">
+                    <div class="widget-card">
+                        <div class="widget-icon">
+                            <i class="fa-duotone fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="widget-content">
+                            <h3 class="widget-title">Total Admins</h3>
+                            <p class="widget-value"><%= totalAdmins %></p>
+                            <span class="widget-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                +1 from last month
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="widget-card">
+                        <div class="widget-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="widget-content">
+                            <h3 class="widget-title">Total Managers</h3>
+                            <p class="widget-value"><%= totalManagers %></p>
+                            <span class="widget-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                in this week
+                            </span>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <div class="widget-card">
+                        <div class="widget-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="widget-content">
+                            <h3 class="widget-title">Total Clients</h3>
+                            <p class="widget-value"><%= totalClients %></p>
+                            <span class="widget-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                in this week
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section
+            <section class="charts-section">
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Revenue Overview</h3>
+                            <div class="chart-controls">
+                                <select class="chart-period">
+                                    <option value="7days">Last 7 days</option>
+                                    <option value="30days" selected>Last 30 days</option>
+                                    <option value="90days">Last 90 days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Client Distribution</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="clientChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+
+            <!-- Admin Inquiries Table -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Admins (<%= totalAdmins %>)</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" onclick="loadModal2()">
+                                <i class="fas fa-plus"></i>
+                                Add New
+                            </button>
+                            <button class="btn btn-secondary" onclick="exportAdminUsers()">
+                                <i class="fas fa-download"></i>
+                                Export Admins
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="consultationsTable">
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+
+
+
+                               <% admins.forEach(user => { %>
+  <tr>
+    <td>
+      <div class="client-info">
+        <div class="client-avatar <%= getAvatarColor(user.username) %>">
+          <%= user.username.charAt(0).toUpperCase() %>
+        </div>
+        <span><%= user.username %></span>
+      </div>
+    </td>
+    <td class="email"><%= user.email %></td>
+    <td><%= user.role.toUpperCase() %></td>
+    <td>
+      <div class="action-buttons">
+        <button class="btn-icon" title="View" onclick="openModal('<%= user.id %>')"> <i class="fas fa-eye"></i> </button>
+       <button class="btn-icon" onclick="loadModal('<%= user.id %>')"><i class="fas fa-edit"></i></button>
+       <button class="btn-icon" onclick="deleteUser('<%= user.id %>')"><i class="fas fa-trash-alt"></i></button>
+
+
+      </div>
+    </td>
+  </tr>
+<% }) %>
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-pagination">
+                        <div class="pagination-info">
+                            There is <%= totalAdmins %> Total Admins
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- clients -->
+                <div class="table-card" style="margin-top: 50px;">
+                    <div class="table-header">
+                        <h3>Clients (<%= totalClients %>)</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" onclick="loadModal2()">
+                                <i class="fas fa-plus"></i>
+                                Add New
+                            </button>
+                            <button class="btn btn-secondary" onclick="exportClientsUsers()">
+                                <i class="fas fa-download"></i>
+                                Export Clients
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="consultationsTable">
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+
+
+
+                               <% clients.forEach(user => { %>
+  <tr>
+    <td>
+      <div class="client-info">
+        <div class="client-avatar <%= getAvatarColor(user.username) %>">
+          <%= user.username.charAt(0).toUpperCase() %>
+        </div>
+        <span><%= user.username %></span>
+      </div>
+    </td>
+    <td class="email"><%= user.email %></td>
+    <td><%= user.role.toUpperCase() %></td>
+    <td>
+      <div class="action-buttons">
+        <button class="btn-icon" title="View" onclick="openModal('<%= user.id %>')"> <i class="fas fa-eye"></i> </button>
+       <button class="btn-icon" onclick="loadModal('<%= user.id %>')"><i class="fas fa-edit"></i></button>
+       <button class="btn-icon" onclick="deleteUser('<%= user.id %>')"><i class="fas fa-trash-alt"></i></button>
+
+
+      </div>
+    </td>
+  </tr>
+<% }) %>
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-pagination">
+                        <div class="pagination-info">
+                            There is <%= totalClients %> Total Clients
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- managers -->
+                <div class="table-card" style="margin-top: 50px; margin-bottom: 70px;">
+                    <div class="table-header">
+                        <h3>Managers (<%= totalManagers %>)</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" onclick="loadModal2()">
+                                <i class="fas fa-plus"></i>
+                                Add New
+                            </button>
+                            <button class="btn btn-secondary" onclick="exportManagersUsers()">
+                                <i class="fas fa-download"></i>
+                                Export Managers
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="consultationsTable">
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+
+                               <% managers.forEach(user => { %>
+  <tr>
+    <td>
+      <div class="client-info">
+        <div class="client-avatar <%= getAvatarColor(user.username) %>">
+          <%= user.username.charAt(0).toUpperCase() %>
+        </div>
+        <span><%= user.username %></span>
+      </div>
+    </td>
+    <td class="email"><%= user.email %></td>
+    <td><%= user.role.toUpperCase() %></td>
+    <td>
+      <div class="action-buttons">
+        <button class="btn-icon" title="View" onclick="openModal('<%= user.id %>')"> <i class="fas fa-eye"></i> </button>
+       <button class="btn-icon" onclick="loadModal('<%= user.id %>')"><i class="fas fa-edit"></i></button>
+       <button class="btn-icon" onclick="deleteUser('<%= user.id %>')"><i class="fas fa-trash-alt"></i></button>
+      </div>
+    </td>
+  </tr>
+<% }) %>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-pagination">
+                        <div class="pagination-info">
+                            There is <%= totalManagers %> Total Managers
+                        </div>
+                    </div>
+                </div>
+                
+            </section>
+        </div>
+
+
+<% admins.forEach(user => { %>
+  <div class="modal-overlay" id="modal-<%= user.id %>">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('<%= user.id %>')">&times;</button>
+      <h2>Admin User Details</h2>
+      <p><strong>Username:</strong> <%= user.username.charAt(0).toUpperCase() + user.username.slice(1) %></p>
+      <p><strong>Email:</strong> <%= user.email %></p>
+      <p><strong>Role:</strong> <%= user.role.charAt(0).toUpperCase() + user.role.slice(1) %></p>
+    </div>
+  </div>
+<% }) %>
+
+
+
+
+
+
+<% clients.forEach(user => { %>
+  <div class="modal-overlay" id="modal-<%= user.id %>">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('<%= user.id %>')">&times;</button>
+      <h2>Client User Details</h2>
+      <p><strong>Username:</strong> <%= user.username.charAt(0).toUpperCase() + user.username.slice(1) %></p>
+      <p><strong>Email:</strong> <%= user.email %></p>
+      <p><strong>Role:</strong> <%= user.role.charAt(0).toUpperCase() + user.role.slice(1) %></p>
+    </div>
+  </div>
+<% }) %>
+
+
+
+
+
+
+<% managers.forEach(user => { %>
+  <div class="modal-overlay" id="modal-<%= user.id %>">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('<%= user.id %>')">&times;</button>
+      <h2>Manager User Details</h2>
+      <p><strong>Username:</strong> <%= user.username.charAt(0).toUpperCase() + user.username.slice(1) %></p>
+      <p><strong>Email:</strong> <%= user.email %></p>
+      <p><strong>Role:</strong> <%= user.role.charAt(0).toUpperCase() + user.role.slice(1) %></p>
+    </div>
+  </div>
+<% }) %>
+
+
+
+
+
+<!-- Modal container -->
+  <div class="modal-overlay" id="mobileOverlay1">
+    <div class="modal-content-fullscreen" id="modalFormContainer">
+      <!-- Form will be inserted here via JavaScript -->
+    </div>
+  </div>
+
+
+
+
+  <!-- Modal container -->
+  <div class="modal-overlay2" id="mobileOverlay2">
+    <div class="modal-content-fullscreen2" id="modalFormContainer2">
+      <!-- Form will be inserted here via JavaScript -->
+    </div>
+  </div>
+
+
+    </main>
+
+
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Custom JavaScript -->
+     <script src="../../../js/autho/login.js"></script>
+    <script src="../../../js/dashboard-manager/users.js"></script>
+</body>
+</html>
+

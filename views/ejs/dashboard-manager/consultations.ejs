@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= role.charAt(0).toUpperCase() + role.slice(1) %> | Dashboard - Manage Consultation Operations</title>
+
+
+    <!-- favicon -->
+     <link rel="icon" type="image/png" href="../../favicon/favicon-96x96.png" sizes="96x96" />
+     <link rel="icon" type="image/svg+xml" href="../../favicon/favicon.svg" />
+     <link rel="shortcut icon" href="../../favicon/favicon.ico" />
+     <link rel="apple-touch-icon" sizes="180x180" href="../../favicon/apple-touch-icon.png" />
+     <meta name="apple-mobile-web-app-title" content="HOBUCO " />
+     <link rel="manifest" href="../../favicon/site.webmanifest" />
+
+
+
+
+
+
+
+
+
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../../css/dashboard/admin.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src="../../../favicon/favicon-96x96.png" alt="">
+                <span>HOBUCO</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <a href="/dashboard" class="menu-link">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="/requests" class="menu-link">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Requests</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="/admin/users" class="menu-link">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li class="menu-item active">
+                <a href="/consultations" class="menu-link">
+                    <i class="fas fa-handshake"></i>
+                    <span>Consultations</span>
+                </a>
+            </li> 
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Consultations</h1>
+            </div>
+            
+            <div class="top-bar-right">
+                <!-- Search Bar -->
+<div class="search-container">
+  <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+  <i class="fas fa-search search-icon"></i>
+</div>
+                
+            
+                
+                <!-- User Profile -->
+                <div class="profile-container">
+                    <button class="profile-btn" id="profileBtn">
+                        <div class="profile-circle profile-avatar"><%= username.charAt(0).toUpperCase() %></div> 
+                        <span class="profile-name"><%= username.charAt(0).toUpperCase() + username.slice(1) %></span>
+                        <i class="fas fa-chevron-down profile-arrow"></i>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-info">
+                            <div class="profile-circle profile-avatar profile-avatar-large"><%= username.charAt(0).toUpperCase() %></div> 
+                            <div class="profile-details">
+                                <h4><%= username.charAt(0).toUpperCase() + username.slice(1) %></h4>
+                                <p><%= role.charAt(0).toUpperCase() + role.slice(1) %></p>
+                            </div>
+                        </div>
+                        <div class="profile-menu">
+                            <a href="/help" class="profile-menu-item">
+                                <i class="fas fa-question-circle"></i>
+                                <span>Help</span>
+                            </a>
+                            <hr class="profile-divider">
+                            <a href="/logout" class="profile-menu-item logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+
+             <!-- Client Inquiries Table -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Consultations (<%= totalConsultations %>)</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" onclick="loadModal2()">
+                                <i class="fas fa-plus"></i>
+                                Add New
+                            </button>
+                            <button class="btn btn-secondary" onclick="confirmExport()">
+                                <i class="fas fa-download"></i>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="consultationsTable">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Email</th>
+                                    <th>Service Type</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+
+
+
+                               <% consultations.forEach(item => { %>
+  <tr>
+    <td>
+      <div class="client-info">
+        <div class="client-avatar <%= getAvatarColor(item.first_name) %>">
+          <%= item.first_name.charAt(0).toUpperCase() %>
+        </div>
+        <span><%= item.first_name %></span>
+      </div>
+    </td>
+    <td class="email"><%= item.email %></td>
+    <td><%= item.service %></td>
+    <td><%= new Date(item.submitted_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' }) %></td>
+    <td>
+      <div class="action-buttons">
+        <button class="btn-icon" title="View" onclick="openModal('<%= item.id %>')"> <i class="fas fa-eye"></i> </button>
+        <button class="btn-icon" onclick="loadModal('<%= item.id %>')"><i class="fas fa-edit"></i></button>
+        <button class="btn-icon" onclick="deleteConsultation('<%= item.id %>')"><i class="fas fa-trash-alt"></i></button>
+
+      </div>
+    </td>
+  </tr>
+<% }) %>
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-pagination">
+                        <div class="pagination-info">
+                            There is <%= totalConsultations %> Total Consultations
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+<% consultations.forEach(item => { %>
+  <div class="modal-overlay" id="modal-<%= item.id %>">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('<%= item.id %>')">&times;</button>
+      <h2>Consultation Details</h2>
+      <p><strong>Names:</strong> <%= item.first_name.charAt(0).toUpperCase() + item.first_name.slice(1) %> <%= item.last_name.charAt(0).toUpperCase() + item.last_name.slice(1) %></p>
+      <p><strong>Email:</strong> <%= item.email %></p>
+      <p><strong>Phone:</strong> <%= item.phone %></p>
+      <p><strong>Company / Organization:</strong> <%= item.company_org %></p>
+      <p><strong>Subject:</strong> <%= item.subject %></p>
+      <p><strong>Service:</strong> <%= item.service %></p>
+      <p><strong>Message:</strong> <%= item.message %></p>
+      <p><strong>Status:</strong> <span class="status <%= item.status || 'pending' %>"><%= item.status.charAt(0).toUpperCase() + item.status.slice(1) %></span></p>
+      <p><strong>Submitted At:</strong> <%= new Date(item.submitted_at).toLocaleString() %></p>
+    </div>
+  </div>
+<% }) %>
+
+
+
+
+
+
+<!-- Modal container -->
+  <div class="modal-overlay" id="mobileOverlay1">
+    <div class="modal-content-fullscreen" id="modalFormContainer">
+      <!-- Form will be inserted here via JavaScript -->
+    </div>
+  </div>
+
+
+
+
+  <!-- Modal container -->
+  <div class="modal-overlay2" id="mobileOverlay2">
+    <div class="modal-content-fullscreen2" id="modalFormContainer2">
+      <!-- Form will be inserted here via JavaScript -->
+    </div>
+  </div>
+    </main>
+
+    
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Custom JavaScript -->
+    <script src="../../../js/dashboard-admin/consultations.js"></script>
+</body>
+</html>
+

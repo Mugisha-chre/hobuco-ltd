@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= role.charAt(0).toUpperCase() + role.slice(1) %> | Dashboard - Requests</title>
+
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="../../favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../../favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="HOBUCO " />
+    <link rel="manifest" href="../../favicon/site.webmanifest" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../../css/dashboard/admin.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src="../../../favicon/favicon-96x96.png" alt="">
+                <span>HOBUCO</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <a href="/dashboard" class="menu-link">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="menu-item active">
+                <a href="/requests" class="menu-link">
+                   <i class="fas fa-paper-plane"></i>
+                    <span>Requests</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="/admin/users" class="menu-link">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="/consultations" class="menu-link">
+                    <i class="fas fa-handshake"></i>
+                    <span>Consultations</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Requests</h1>
+            </div>
+            
+            <div class="top-bar-right">
+                <!-- Search Bar -->
+                <div class="search-container">
+  <button class="search-toggle" style="display: none;" id="searchToggle">
+    <i class="fas fa-search"></i>
+  </button>
+  <div class="search-wrapper" id="searchWrapper">
+    <div class="search-input-container">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+      <i class="fas fa-search search-icon"></i>
+    </div>
+    <button class="search-close" style="display: none;" id="searchClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>
+
+                
+                <!-- User Profile -->
+                <div class="profile-container">
+                    <button class="profile-btn" id="profileBtn">
+                        <div class="profile-circle profile-avatar"><%= username.charAt(0).toUpperCase() %></div> 
+                        <span class="profile-name"><%= username.charAt(0).toUpperCase() + username.slice(1) %></span>
+                        <i class="fas fa-chevron-down profile-arrow"></i>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-info">
+                            <div class="profile-circle profile-avatar profile-avatar-large"><%= username.charAt(0).toUpperCase() %></div> 
+                            <div class="profile-details">
+                                <h4><%= username.charAt(0).toUpperCase() + username.slice(1) %></h4>
+                                <p><%= role.charAt(0).toUpperCase() + role.slice(1) %></p>
+                            </div>
+                        </div>
+                        <div class="profile-menu">
+                            <a href="/help" class="profile-menu-item">
+                                <i class="fas fa-question-circle"></i>
+                                <span>Help</span>
+                            </a>
+                            <hr class="profile-divider">
+                            <a href="/logout" class="profile-menu-item logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+
+          <section class="widgets-section">
+  <div class="widget-grid">
+    
+    <div class="widget-card">
+      <div class="widget-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <div class="widget-content">
+        <h3 class="widget-title">Approved Requests</h3>
+        <p class="widget-value"><%= totalApproved %></p>
+        <span class="widget-change positive">
+          <i class="fas fa-arrow-up"></i>
+          approved recently
+        </span>
+      </div>
+    </div>
+
+
+    <div class="widget-card">
+      <div class="widget-icon">
+        <i class="fas fa-clock"></i>
+      </div>
+      <div class="widget-content">
+        <h3 class="widget-title">Pending Requests</h3>
+        <p class="widget-value"><%= totalPending %></p>
+        <span class="widget-change neutral" style="color: #d8bd0d;">
+          <i class="fas fa-hourglass-half"></i>
+          currently waiting
+        </span>
+      </div>
+    </div>
+
+    <div class="widget-card">
+      <div class="widget-icon">
+        <i class="fas fa-times-circle"></i>
+      </div>
+      <div class="widget-content">
+        <h3 class="widget-title">Dismissed Requests</h3>
+        <p class="widget-value"><%= totalDismissed %></p>
+        <span class="widget-change negative">
+          <i class="fas fa-arrow-down"></i>
+          dismissed recently
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+             <!-- Requests Table -->
+            <section class="table-section">
+              <div class="table-card">
+                <div class="table-header">
+                  <h3>Requests (<%= totalConsultations %>)</h3>
+                  <div class="table-actions" style="display: flex; align-items: center;">
+                    <label style="margin-right: 8px;">Filter Status:</label>
+                    <select id="statusFilter" class="btn btn-secondary">
+                      <option value="all">All</option>
+                      <option value="pending">Pending</option>
+                      <option value="approved">Approved</option>
+                      <option value="dismissed">Dismissed</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="table-container">
+                  <table class="data-table" id="requestsTable">
+                    <thead>
+                      <tr>
+                        <th>Client Name</th>
+                        <th class="hide-mobile">Service Type</th>
+                        <th class="hide-mobile">Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="requestsBody">
+                      <% consultations.forEach(item => { %>
+                        <tr data-status="<%= (item.status || 'pending').toLowerCase() %>">
+                          <td>
+                            <div class="client-info">
+                              <div class="client-avatar <%= getAvatarColor(item.first_name) %>">
+                                <%= item.first_name.charAt(0).toUpperCase() %>
+                              </div>
+                              <span><%= item.first_name %> <%= item.last_name %></span>
+                            </div>
+                          </td>
+                          <td class="hide-mobile"><%= item.service %></td>
+                          <td class="hide-mobile"><%= new Date(item.submitted_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' }) %></td>
+                          
+                          <td>
+  <span class="status <%= item.status || 'pending' %>">
+    <%= (item.status || 'pending').charAt(0).toUpperCase() + (item.status || 'pending').slice(1) %>
+  </span>
+</td>
+
+
+
+
+                          <td>
+                            <div class="action-buttons">
+    
+
+    <!-- New dropdown -->
+    <div class="dropdown">
+      <button class="btn-icon dropdown-toggle">Actions <i class="fas fa-caret-down"></i></button>
+      <div class="dropdown-menu">
+        <a href="#" onclick="handleAction('<%= item.id %>', 'approve')">Approve</a>
+        <a href="#" onclick="handleAction('<%= item.id %>', 'dismiss')">Dismiss</a>
+      </div>
+    </div>
+  </div>
+</td>
+
+                        </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="table-pagination">
+                  <div class="pagination-info">
+                    There is <%= totalConsultations %> Total Requests
+                  </div>
+                </div>
+              </div>
+            </section>
+        </div>
+
+        <!-- Modal container for edit consultation -->
+        <div class="modal-overlay" id="mobileOverlay1">
+          <div class="modal-content-fullscreen" id="modalFormContainer">
+            <!-- Form will be inserted here via JS -->
+          </div>
+        </div>
+
+        <!-- Modal container for add new -->
+        <div class="modal-overlay2" id="mobileOverlay2">
+          <div class="modal-content-fullscreen2" id="modalFormContainer2">
+            <!-- Form will be inserted here via JS -->
+          </div>
+        </div>
+    </main>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+
+
+
+    
+
+    <script>
+      // ========================
+// Service Worker
+// ========================
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+            console.log('Service Worker registered:', reg);
+        }).catch(err => console.log('Service Worker registration failed:', err));
+    });
+}
+
+// ========================
+// DOMContent Loaded Init
+// ========================
+document.addEventListener('DOMContentLoaded', function () {
+    initSidebar();
+    initDropdowns();
+    initMobileMenu();
+    initSearchFilter();
+    initNotifications();
+    handleResize();
+    initThemeSwitch();
+    optimizePerformance();
+    handleErrors();
+    animateCounters();
+});
+
+// ========================
+// Sidebar functionality
+// ========================
+function initSidebar() {
+    const menuItems = document.querySelectorAll('.menu-item');
+    const menuLinks = document.querySelectorAll('.menu-link');
+
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            menuItems.forEach(item => item.classList.remove('active'));
+            this.parentElement.classList.add('active');
+        });
+    });
+}
+
+// ========================
+// Dropdowns (profile & notifications)
+// ========================
+function initDropdowns() {
+    const notificationBtn = document.getElementById('notificationBtn');
+    const notificationDropdown = document.getElementById('notificationDropdown');
+
+    const profileBtn = document.getElementById('profileBtn');
+    const profileDropdown = document.getElementById('profileDropdown');
+
+    // Toggle notification
+    if (notificationBtn && notificationDropdown) {
+        notificationBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            notificationDropdown.classList.toggle('show');
+            profileDropdown.classList.remove('show');
+            profileBtn.classList.remove('active');
+        });
+    }
+
+    // Toggle profile
+    if (profileBtn && profileDropdown) {
+        profileBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            profileDropdown.classList.toggle('show');
+            profileBtn.classList.toggle('active');
+            notificationDropdown.classList.remove('show');
+        });
+    }
+
+    // Click outside dropdown closes them
+    document.addEventListener('click', function (e) {
+        if (notificationDropdown && !notificationDropdown.contains(e.target) && notificationBtn !== e.target) {
+            notificationDropdown.classList.remove('show');
+        }
+        if (profileDropdown && !profileDropdown.contains(e.target) && profileBtn !== e.target) {
+            profileDropdown.classList.remove('show');
+            profileBtn.classList.remove('active');
+        }
+    });
+}
+
+// ========================
+// Mobile Menu
+// ========================
+function initMobileMenu() {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+
+    if (mobileMenuToggle && sidebar && mobileOverlay) {
+        mobileMenuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('show');
+            mobileOverlay.classList.toggle('show');
+            document.body.style.overflow = sidebar.classList.contains('show') ? 'hidden' : '';
+        });
+    }
+
+    if (sidebarToggle && sidebar && mobileOverlay) {
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.remove('show');
+            mobileOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        });
+    }
+
+    if (mobileOverlay && sidebar) {
+        mobileOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('show');
+            mobileOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        });
+    }
+
+    const menuLinks = document.querySelectorAll('.menu-link');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('show');
+                mobileOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+}
+
+// ========================
+// Search + Filter + Table
+// ========================
+function initSearchFilter() {
+    const searchInput = document.getElementById('searchInput');
+    const tableBody = document.getElementById('requestsBody');
+    const statusFilter = document.getElementById('statusFilter');
+
+    // Save original table HTML
+    const originalTable = tableBody.innerHTML;
+
+    // Highlight function
+    const highlight = (text, query) => {
+        if (!query) return text;
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+    };
+
+    // Apply status filter on existing rows
+    function applyStatusFilter() {
+        const filter = statusFilter ? statusFilter.value : 'all';
+        const rows = tableBody.querySelectorAll('tr');
+        rows.forEach(row => {
+            const status = row.getAttribute('data-status') || 'pending';
+            row.style.display = (filter === 'all' || filter === status) ? '' : 'none';
+        });
+    }
+
+    // Search input event
+    if (searchInput) {
+        searchInput.addEventListener('input', function () {
+            const query = this.value.trim().toLowerCase();
+            if (!query) {
+                tableBody.innerHTML = originalTable;
+                applyStatusFilter();
+                return;
+            }
+
+            // Fetch search results
+            fetch('/search-consultations?query=' + encodeURIComponent(query))
+                .then(res => res.json())
+                .then(data => {
+                    tableBody.innerHTML = '';
+
+                    if (data.length === 0) {
+                        tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:red;">No matching records.</td></tr>`;
+                        return;
+                    }
+
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.setAttribute('data-status', (item.status || 'pending').toLowerCase());
+
+                        tr.innerHTML = `
+                        <td>
+                          <div class="client-info">
+                            <div class="client-avatar avatar-${item.first_name.charAt(0).toLowerCase()}">
+                              ${item.first_name.charAt(0).toUpperCase()}
+                            </div>
+                            <span>${highlight(item.first_name, query)} ${highlight(item.last_name, query)}</span>
+                          </div>
+                        </td>
+                        <td class="hide-mobile">${highlight(item.service, query)}</td>
+                        <td class="hide-mobile">${highlight(new Date(item.submitted_at).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'2-digit' }), query)}</td>
+                        <td>
+                          <span class="status ${item.status || 'pending'}">
+                            ${highlight((item.status || 'pending').charAt(0).toUpperCase() + (item.status || 'pending').slice(1), query)}
+                          </span>
+                        </td>
+                        <td>
+                          <div class="action-buttons">
+                            <div class="dropdown">
+                              <button class="btn-icon dropdown-toggle">Actions <i class="fas fa-caret-down"></i></button>
+                              <div class="dropdown-menu">
+                                <a href="#" onclick="handleAction('${item.id}', 'approve')">Approve</a>
+                                <a href="#" onclick="handleAction('${item.id}', 'dismiss')">Dismiss</a>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        `;
+                        tableBody.appendChild(tr);
+                    });
+
+                    applyStatusFilter();
+                })
+                .catch(err => console.error('Search failed:', err));
+        });
+    }
+
+    // Status filter event
+    if (statusFilter) {
+        statusFilter.addEventListener('change', applyStatusFilter);
+    }
+
+    // Click outside search resets
+    document.addEventListener('click', function (e) {
+        const searchWrapper = document.querySelector('.search-wrapper');
+        if (searchInput && !searchWrapper.contains(e.target) && !tableBody.contains(e.target)) {
+            tableBody.innerHTML = originalTable;
+            searchInput.value = '';
+            applyStatusFilter();
+        }
+    });
+}
+
+// ========================
+// Table Actions: Approve/Dismiss
+// ========================
+async function handleAction(id, action) {
+    if (!confirm(`Are you sure you want to ${action} this consultation?`)) return;
+
+    try {
+        const response = await fetch(`/requests/action/${id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action })
+        });
+        const result = await response.json();
+        if (result.success) {
+            alert(result.message);
+            location.reload();
+        } else {
+            alert(result.message);
+        }
+    } catch (err) {
+        console.error(err);
+        alert('Something went wrong!');
+    }
+}
+
+// ========================
+// Notifications
+// ========================
+function initNotifications() {
+    const notificationItems = document.querySelectorAll('.notification-item');
+    notificationItems.forEach(item => {
+        item.addEventListener('click', () => {
+            item.style.opacity = '0.6';
+        });
+    });
+}
+
+// ========================
+// Window Resize
+// ========================
+function handleResize() {
+    const sidebar = document.getElementById('sidebar');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            if (sidebar) sidebar.classList.remove('show');
+            if (mobileOverlay) mobileOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+// ========================
+// Other utilities (Theme, Errors, etc.)
+// ========================
+function initThemeSwitch() {}
+function optimizePerformance() {}
+function handleErrors() {}
+function animateCounters() {} // optional counter animation
+
+
+</script>
+</body>
+</html>

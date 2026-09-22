@@ -1,0 +1,28 @@
+{
+  "name": "consult_web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "ejs": "^6.0.1",
+    "exceljs": "^4.4.0",
+    "express": "^4.22.3",
+    "express-session": "^1.19.0",
+    "method-override": "^3.0.0",
+    "nodemailer": "^10.0.10",
+    "sql.js": "^1.14.2"
+  }
+}

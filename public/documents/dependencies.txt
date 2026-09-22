@@ -1,0 +1,20 @@
+local dependenicies
+
++-- bcryptjs@3.0.2
++-- cookie-parser@1.4.7
++-- ejs@3.1.10
++-- exceljs@4.4.0
++-- express-session@1.18.2
++-- express@5.1.0
++-- method-override@3.0.0
++-- mysql2@3.14.2
++-- nodemailer@7.0.5
+`-- path@0.12.7
+
+
+
+
+
+global dependencies
+
+`-- nodemon@3.1.10
